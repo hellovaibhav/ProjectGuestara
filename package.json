@@ -1,0 +1,30 @@
+{
+  "name": "guestara-assignment",
+  "version": "1.0.0",
+  "description": "��#\u0000 \u0000P\u0000r\u0000o\u0000j\u0000e\u0000c\u0000t\u0000G\u0000u\u0000e\u0000s\u0000t\u0000a\u0000r\u0000a\u0000\r\u0000 \u0000",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js ",
+    "test": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hellovaibhav/ProjectGuestara.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hellovaibhav/ProjectGuestara/issues"
+  },
+  "homepage": "https://github.com/hellovaibhav/ProjectGuestara#readme",
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "mongoose": "^8.9.5",
+    "nodemon": "^3.1.9"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^9.4.0"
+  }
+}
