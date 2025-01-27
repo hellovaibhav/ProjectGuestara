@@ -1,0 +1,365 @@
+{
+	"info": {
+		"_postman_id": "6c7da8a1-aca0-49eb-a526-4ab25eeabe66",
+		"name": "Guestara Assignment",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31419373"
+	},
+	"item": [
+		{
+			"name": "Category",
+			"item": [
+				{
+					"name": "Create Category",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"sports\",\r\n    \"image\":\"https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.britannica.com%2Ftopic%2Fvegetable&psig=AOvVaw3dS3W-DrgX5ydPxAVC2ySZ&ust=1737814511772000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCIimq9XFjosDFQAAAAAdAAAAABAE\",\r\n    \"description\":\"sports equipments\",\r\n    \"taxApplicability\":true,\r\n    \"tax\":\"12\",\r\n    \"taxType\":\"GST\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{devURL}}/category/create",
+							"host": [
+								"{{devURL}}"
+							],
+							"path": [
+								"category",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find Category",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{devURL}}/category/find",
+							"host": [
+								"{{devURL}}"
+							],
+							"path": [
+								"category",
+								"find"
+							],
+							"query": [
+								{
+									"key": "categoryId",
+									"value": "679663cb5b92f70a4e62010b",
+									"disabled": true
+								},
+								{
+									"key": "categoryName",
+									"value": "sports",
+									"disabled": true
+								},
+								{
+									"key": "page",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "5",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Category",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"tax\": 13,\r\n    \"taxType\": \"CGST\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{devURL}}/category/:categoryId",
+							"host": [
+								"{{devURL}}"
+							],
+							"path": [
+								"category",
+								":categoryId"
+							],
+							"variable": [
+								{
+									"key": "categoryId",
+									"value": "6797823f944701277ed2d5b8"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Sub Category",
+			"item": [
+				{
+					"name": "Find Sub Categories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{devURL}}/subCategory/find",
+							"host": [
+								"{{devURL}}"
+							],
+							"path": [
+								"subCategory",
+								"find"
+							],
+							"query": [
+								{
+									"key": "categoryName",
+									"value": "sports",
+									"disabled": true
+								},
+								{
+									"key": "subCategoryId",
+									"value": "6794f2fbc2992a5f174a2996",
+									"disabled": true
+								},
+								{
+									"key": "subCategoryName",
+									"value": "cricket",
+									"disabled": true
+								},
+								{
+									"key": "page",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Sub Category",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Kitchen\",\r\n    \"image\":\"https://images.healthshots.com/healthshots/en/images/2024/08/07/original/Green_vegggies_1723032372697.jpeg\",\r\n    \"description\":\"these appliances are used in Kitchen\",\r\n    \"category\":\"6797331ea45f13b4b05dabfe\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{devURL}}/subCategory/create",
+							"host": [
+								"{{devURL}}"
+							],
+							"path": [
+								"subCategory",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Sub Category",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n        \"name\": \"Root\",\r\n        \"image\": \"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTih6JCRrx3wsS912r_hXWv3nBeE5h4mKzYHg&s\",\r\n        \"description\": \"these are root part of plant\",\r\n        \"taxApplicability\": true,\r\n        \"tax\": 5,\r\n        \"category\":\"6793a0af605a4f6c5f75c1c5\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{devURL}}/subCategory/:subCategoryId",
+							"host": [
+								"{{devURL}}"
+							],
+							"path": [
+								"subCategory",
+								":subCategoryId"
+							],
+							"variable": [
+								{
+									"key": "subCategoryId",
+									"value": "6794f2fbc2992a5f174a2996"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Item",
+			"item": [
+				{
+					"name": "Create Item",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"IFB rfrigRatoR 200L\",\r\n    \"image\":\"https://yvcare.in/wp-content/uploads/2023/03/718nkSzfosL._SL1500_-min.jpg\",\r\n    \"description\":\"IFB industrial refrigrator\",\r\n    \"baseAmount\":350000,\r\n    \"discount\":55000,\r\n    \"category\":\"679663cb5b92f70a4e62010b\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{devURL}}/item/create",
+							"host": [
+								"{{devURL}}"
+							],
+							"path": [
+								"item",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find Item",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{devURL}}/item/find",
+							"host": [
+								"{{devURL}}"
+							],
+							"path": [
+								"item",
+								"find"
+							],
+							"query": [
+								{
+									"key": "categoryName",
+									"value": "milk",
+									"disabled": true
+								},
+								{
+									"key": "itemId",
+									"value": "67952c3617d8a227478879d3",
+									"disabled": true
+								},
+								{
+									"key": "itemName",
+									"value": "Nestle Milkmaid Condensed Milk 381ml",
+									"disabled": true
+								},
+								{
+									"key": "subCategoryName",
+									"value": "High Protien",
+									"disabled": true
+								},
+								{
+									"key": "page",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "20",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Item",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"name\": \"Amool Milk\",\r\n        \"image\": \"okay.png\",\r\n        \"description\": \"High protien milk by amul, carton of 32, 250 ml packets\",\r\n        \"taxApplicability\": true,\r\n        \"tax\": 5,\r\n        \"baseAmount\": 3008,\r\n        \"category\": \"6793a00cbc8044967e548408\"\r\n }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{devURL}}/item/:itemId",
+							"host": [
+								"{{devURL}}"
+							],
+							"path": [
+								"item",
+								":itemId"
+							],
+							"variable": [
+								{
+									"key": "itemId",
+									"value": "679526733917689c1640c78b"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search Item",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{devURL}}/item/search",
+							"host": [
+								"{{devURL}}"
+							],
+							"path": [
+								"item",
+								"search"
+							],
+							"query": [
+								{
+									"key": "itemName",
+									"value": "rfrgrator",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
