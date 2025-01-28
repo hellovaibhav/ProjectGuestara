@@ -18,7 +18,7 @@ export const createItem = async (req, res) => {
         if (subCat) {
             const subCategoryData = await subCategory.findById(subCat);
 
-            if(!subCategoryData)
+            if (!subCategoryData)
                 throw new Error("SubCategory not found");
 
             // if category is not provided in the request body, set it as provided in subcategory
@@ -46,7 +46,7 @@ export const createItem = async (req, res) => {
         else {
             const categoryData = await category.findById(cat);
 
-            if(!categoryData)
+            if (!categoryData)
                 throw new Error("Category not found");
             if (!req.body.taxApplicability) {
                 createdItem.taxApplicability = categoryData.taxApplicability;
@@ -73,7 +73,7 @@ export const getItems = async (req, res) => {
     try {
         // storing item Id,item Name, subCategory Name and category Name from the request query
 
-        const {page,limit,...more}= req.query;
+        const { page, limit, ...more } = req.query;
         const { itemId, itemName, subCategoryName, categoryName } = more;
 
         // Conditional block to limit search fields
@@ -89,20 +89,20 @@ export const getItems = async (req, res) => {
 
         }
         else if (subCategoryName) {
-           const subCatId = await subCategory.findOne({ name: subCategoryName },{name:1});
-            if(!subCatId)
+            const subCatId = await subCategory.findOne({ name: subCategoryName }, { name: 1 });
+            if (!subCatId)
                 throw new Error("SubCategory not found");
-            itemData = await item.find({ subCategory: subCatId },{name:1}).skip((page-1)*limit).limit(limit);
+            itemData = await item.find({ subCategory: subCatId }, { name: 1 }).skip((page - 1) * limit).limit(limit);
         }
         else if (categoryName) {
             console.log(categoryName);
             const catId = await category.findOne({ name: categoryName });
-            if(!catId)
+            if (!catId)
                 throw new Error("Category not found");
-            itemData = await item.find({ category: catId }, { name: 1 }).skip((page-1)*limit).limit(limit);
+            itemData = await item.find({ category: catId }, { name: 1 }).skip((page - 1) * limit).limit(limit);
         }
         else {
-            itemData = await item.find({}, { name: 1 }).skip((page-1)*limit).limit(limit);
+            itemData = await item.find({}, { name: 1 }).skip((page - 1) * limit).limit(limit);
         }
 
         if (!itemData) {
@@ -121,73 +121,76 @@ export const editItem = async (req, res) => {
     try {
 
         // updating subCategory with the request body
-        let {discount,baseAmount,totalAmount,updatedAt,createdAt,deletedAt,...rest} = req.body;
+        let { discount, baseAmount, totalAmount, updatedAt, createdAt, deletedAt, ...rest } = req.body;
 
-        const catId= rest.category;
+        const catId = rest.category;
         const subCatId = rest.subCategory;
         const itemData = await item.findById(req.params.itemId);
 
         // setting the update date as the request timing and date
         updatedAt = Date.now();
-        
+
         // if catergory id or subCategory id is provided in the request body
-        if((catId || subCatId) && (subCatId!=""))
-        {
+        if ((catId || subCatId) && (subCatId != "")) {
             const subCatData = await subCategory.findById(subCatId);
-            if(!subCatData)
+            if (!subCatData)
                 throw new Error("SubCategory with this id not found");
-            else if(!catId)
-            {
-                if(String(itemData.category) != String(subCatData.category))
-                {
+            else if (!catId) {
+                if (String(itemData.category) != String(subCatData.category)) {
                     throw new Error("Subcategory added is not of the same category as the item, edit category as well");
                 }
             }
-            else if(String(subCatData.category) != String(catId))
+            else if (String(subCatData.category) != String(catId))
                 throw new Error("Category of item dosen't have any item with this subCategory");
-            
+
         }
 
-        if(discount || baseAmount || totalAmount)
-        {
+        if (discount || baseAmount || totalAmount) {
             discount = discount || itemData.discount;
             baseAmount = baseAmount || itemData.baseAmount;
 
-            if(!totalAmount)
-            {
+            if (!totalAmount) {
                 totalAmount = baseAmount - discount;
             }
-            else if(totalAmount != baseAmount - discount)
+            else if (totalAmount != baseAmount - discount)
                 throw new Error("Total amount must be equal to baseAmount - discount");
+            itemData.set({ totalAmount, baseAmount, discount, ...rest });
+            const savedData = await itemData.save();
+
+            res.status(200).json(savedData);
+        }
+        else {
+            // error handling if subCategory not found
+            if (!itemData) {
+                return res.status(404).json({ error: 'Sub Category not found' });
+            }
+            itemData.set({ ...rest });
+            const savedData = await itemData.save();
+
+            res.status(200).json(savedData);
         }
 
-        // error handling if subCategory not found
-        if (!itemData) {
-            return res.status(404).json({ error: 'Sub Category not found' });
-        }
-        itemData.set({totalAmount,baseAmount,discount,...rest});
-        const savedData = await itemData.save();
-
-        res.status(200).json(savedData);
     } catch (err) {
         res.status(400).json({ message: "Error encountered while updating Item Data", error: err.message });
     }
 };
 
-export const searchItem = async(req,res)=>{
-    try{
+export const searchItem = async (req, res) => {
+    try {
         const itemName = req.query.itemName;
-        console.log(itemName)
+
+        if(!itemName)
+            throw new Error("Item Name is required");
         // using mongoDB pattern matching to search for item
-        const foundResults = await item.find({name:{$regex: itemName, $options: 'i'}});
+        const foundResults = await item.find({ name: { $regex: itemName, $options: 'i' } });
 
 
         // error handling if no item found
-        if(!foundResults)
+        if (!foundResults)
             throw new Error("No item found with this name");
 
-        res.status(200).json({foundResults});
-    }catch(err){
+        res.status(200).json({ foundResults });
+    } catch (err) {
         res.status(400).json({ message: "Error encountered while searching Item Data", error: err.message });
     }
 }
